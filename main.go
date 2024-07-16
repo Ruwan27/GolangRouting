@@ -10,10 +10,18 @@ import (
 
 func main() {
 	router := gin.Default()
-	router.GET("/getData", getData)
-	router.POST("/getPostData", getPostData)
 	router.GET("/getQueryString", getQueryString)
 	router.GET("/getUrlData/:name/:age", getUrlData)
+
+	admin := router.Group("/admin")
+	{
+		admin.GET("/getData", getData)
+	}
+	client := router.Group("/client")
+	{
+		client.POST("/getPostData", getPostData)
+	}
+
 	server := &http.Server{
 		Addr:         ":8080",
 		Handler:      router,
